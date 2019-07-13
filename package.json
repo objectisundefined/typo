@@ -1,24 +1,27 @@
 {
-  "name": "typo",
-  "version": "1.0.0",
-  "description": "a js bundle tool",
+  "name": "@objectisundefined/typo",
+  "version": "1.0.1",
+  "description": "a typescript library startkit",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
-  "repository": "https://github.com/YOUR_GITHUB_USER_NAME/typo",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/objectisundefined/typo.git"
+  },
+  "author": "objectisundefined <2535612040@qq.com>",
   "license": "MIT",
   "keywords": [],
   "scripts": {
     "describe": "npm-scripts-info",
-    "build": "run-s clean && run-p build:*",
-    "build:main": "tsc -p tsconfig.json",
-    "build:module": "tsc -p tsconfig.module.json",
+    "commit": "npx git-cz",
+    "build": "rollup -c rollup.config.ts",
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
     "fix:tslint": "tslint --fix --project .",
     "test": "run-s build test:*",
     "test:lint": "tslint --project . && prettier \"src/**/*.ts\" --list-different",
-    "test:unit": "nyc --silent ava",
+    "test:unit": "nyc --silent jest --coverage",
     "watch": "run-s clean build:main && run-p \"build:main -- -w\" \"test:unit -- --watch\"",
     "cov": "run-s build test:unit cov:html && open-cli coverage/index.html",
     "cov:html": "nyc report --reporter=html",
@@ -54,28 +57,51 @@
     "sha.js": "^2.4.11"
   },
   "devDependencies": {
-    "ava": "2.2.0",
+    "@bitjson/npm-scripts-info": "^1.0.0",
+    "@commitlint/config-conventional": "^8.1.0",
+    "@types/jest": "^24.0.15",
     "codecov": "^3.5.0",
+    "commitizen": "^3.1.1",
+    "commitlint": "^8.1.0",
     "cz-conventional-changelog": "^2.1.0",
     "gh-pages": "^2.0.1",
+    "husky": "^3.0.0",
+    "jest": "^24.8.0",
+    "lint-staged": "^9.2.0",
     "npm-run-all": "^4.1.5",
-    "@bitjson/npm-scripts-info": "^1.0.0",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
+    "rollup": "^1.16.7",
+    "rollup-plugin-commonjs": "^10.0.1",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-typescript2": "^0.22.0",
     "standard-version": "^6.0.1",
     "trash-cli": "^3.0.0",
+    "ts-jest": "^24.0.2",
     "tslint": "^5.18.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-immutable": "^6.0.1",
     "typescript": "^3.5.3"
   },
-  "ava": {
-    "failFast": true,
-    "files": [
-      "build/main/**/*.spec.js"
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    },
+    "testEnvironment": "node",
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
     ],
-    "sources": [
-      "build/main/**/*.js"
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/test/",
+      "/build/",
+      "/types/"
+    ],
+    "testPathIgnorePatterns": [
+      "/.rpt2_cache/"
     ]
   },
   "config": {
@@ -84,6 +110,7 @@
     }
   },
   "prettier": {
+    "semi": false,
     "singleQuote": true
   },
   "nyc": {
@@ -91,5 +118,21 @@
     "exclude": [
       "**/*.spec.js"
     ]
-  }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn run test && lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "{src,test}/**/*.ts": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/objectisundefined/typo/issues"
+  },
+  "homepage": "https://github.com/objectisundefined/typo#readme"
 }
