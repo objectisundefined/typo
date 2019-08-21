@@ -1,5 +1,10 @@
 # typo
 
+[![CircleCI](https://circleci.com/gh/objectisundefined/typo.svg?style=svg)](https://circleci.com/gh/objectisundefined/typo)
+[![Build Status](https://travis-ci.org/objectisundefined/typo.svg?branch=master)](https://travis-ci.org/objectisundefined/typo)
+[![Coverage Status](https://coveralls.io/repos/github/objectisundefined/typo/badge.svg?branch=master)](https://coveralls.io/github/objectisundefined/typo?branch=master)
+[![license](https://img.shields.io/github/license/objectisundefined/typo.svg?maxAge=2592000)](https://github.com/objectisundefined/typo/LICENSE)
+
 a typescript library startkit
 
 created by `npx typescript-starter`
